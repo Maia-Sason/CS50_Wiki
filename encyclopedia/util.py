@@ -35,3 +35,11 @@ def get_entry(title):
         return f.read().decode("utf-8")
     except FileNotFoundError:
         return None
+
+def query(title):
+    """
+    Searches database with regex
+    """
+    if get_entry(title) == None:
+        
+        
