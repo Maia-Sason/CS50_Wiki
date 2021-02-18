@@ -5,14 +5,16 @@
 {% endblock %}
 
 {% block body %}
-    <h1>All Pages</h1>
+    {% if title != None %}
+            <a href="{% url 'encyclopedia:edit' title=title %}">edit entry</a>
+        <h1>All Pages</h1>
 
 
-        {% if title != None %}
-            <p>{{title}}</p>
-        {% else %}
-            <p>No entries exist by that title!</p>
-        {% endif %}
+        
+        <p>{{title}}</p>
+    {% else %}
+        <p>No entries exist by that title!</p>
+    {% endif %}
 
 
 {% endblock %}

@@ -40,6 +40,10 @@ def query(title):
     """
     Searches database with regex
     """
-    if get_entry(title) == None:
-        
-        
+    entry_list = []
+    entries = list_entries()
+    for entry in entries:
+        match = re.search("%s" % title, entry, re.IGNORECASE)
+        if match:
+            entry_list.append(entry)
+    return entry_list
