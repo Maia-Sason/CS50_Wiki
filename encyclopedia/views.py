@@ -10,6 +10,10 @@ class NewEntryForm(forms.Form):
     title = forms.CharField(label="Title of Entry")
     body = forms.CharField(widget=forms.Textarea(attrs={"style":"height:30em;"}))
 
+class EditEntryForm(forms.Form):
+    title = forms.CharField(widget=forms.HiddenInput())
+    body = forms.CharField(widget=forms.Textarea(attrs={"style":"height:30em;"}))
+
 def index(request):
     if request.method == "POST":
 
@@ -28,7 +32,8 @@ def index(request):
 
 def wiki(request, title):
     return render(request, "encyclopedia/wiki.html", {
-        "title": util.get_entry(title.upper())
+        "title": util.get_entry(title.upper()),
+        "title_raw": title
     })
 
 def new(request):
@@ -56,11 +61,16 @@ def new(request):
 def edit(request, title):
     ''' render edit or just pass args to new.html '''
     if request.method == "POST":
-        ''' do something '''
+        form = EditEntryForm(request.POST)
+        if form.is_valid():
+            title = form.cleaned_data["title"]
+            body = form.cleaned_data["body"]
+            util.save_entry(title, body)
+            return HttpResponseRedirect(reverse("encyclopedia:wiki", kwargs={'title': title}))
 
-    return render(request, "encyclopedia/new.html", {
-        "form": NewEntryForm(),
-        "edit": util.get_entry(title)
+    return render(request, "encyclopedia/edit.html", {
+        "form": EditEntryForm(initial = {"body" : util.get_entry(title), "title" : title}),
+        "title": title
     })
 
 def random(request):

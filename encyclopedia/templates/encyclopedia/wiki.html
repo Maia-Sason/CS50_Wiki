@@ -6,15 +6,22 @@
 
 {% block body %}
     {% if title != None %}
-            <a href="{% url 'encyclopedia:edit' title=title %}">edit entry</a>
-        <h1>All Pages</h1>
-
+    <div class="container">
+        <div class="row">
+            <div class="col-sm">
+                <a class="edit_link" href="{% url 'encyclopedia:edit' title=title_raw %}">edit entry</a>
+            </div>
+        </div>
+    </div>
+    <div class=container>
 
         
-        <p>{{title}}</p>
+        <pre style="white-space: pre-wrap;">{{title}}</pre>
+       
     {% else %}
         <p>No entries exist by that title!</p>
     {% endif %}
+</div>
 
 
 {% endblock %}

@@ -36,3 +36,12 @@ textarea {
 .sidebar h2 {
     margin-top: 5px;
 }
+
+.edit_link {
+    float: right;
+    position: relative;
+}
+
+.clear {
+    clear:both;
+}
