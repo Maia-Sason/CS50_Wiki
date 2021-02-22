@@ -52,33 +52,39 @@ def Markdown(entry):
     """
     Converts Markdown text to html
     """
+    # P
+    pattern_para = "([^#|##|###].$)([\w\d_.!?\/\\:\>\<,'\"].*)"
+    new_para = r"<p>\2</p>"
+
+    entry = re.sub(pattern_para, new_para, entry)
+
     # Bold
     pattern = "(\*\*)([a-zA-Z0-9_.!?\\- ]*)?(\*\*)"
-    new_pattern = r"<strong> \2 </strong>"
+    new_pattern = r"<strong>\2</strong>"
 
     entry = re.sub(pattern, new_pattern, entry)
 
     #  H3
     pattern_header_3 = "(#{3})([a-zA-Z0-9_.!?\\ ]*.)"
-    new_h3 = r"<h3> \2 </h3>"
+    new_h3 = r"<h3>\2</h3>"
 
     entry = re.sub(pattern_header_3, new_h3, entry)
 
     #  H2
     pattern_header_2 = "(#{2})([a-zA-Z0-9_.!?\\ ]*.)"
-    new_h2 = r"<h2> \2 </h2>"
+    new_h2 = r"<h2>\2</h2>"
 
     entry = re.sub(pattern_header_2, new_h2, entry)
 
     #  H1
     pattern_header = "(#{1})([a-zA-Z0-9_.!?\\ ]*.)"
-    new_h1 = r"<h1> \2 </h1>"
+    new_h1 = r"<h1>\2</h1>"
 
     entry = re.sub(pattern_header, new_h1, entry)
 
     #  List
     pattern_list = "(\*)([a-zA-Z0-9_.!?\\ ]*.)"
-    new_list = r"<li> \2 </li>"
+    new_list = r"<li>\2</li>"
 
     entry = re.sub(pattern_list, new_list, entry)
 
@@ -88,10 +94,5 @@ def Markdown(entry):
 
     entry = re.sub(pattern_link, new_link, entry)
 
-    # P
-    # pattern_para = "(\n[^\w^\d_.!?\/\-\*\\:\>\<  ]*)"
-    # new_para = r"<p> \1 </p>"
-
-    # return re.sub(pattern_para, new_para, entry)
-
     return entry
+
