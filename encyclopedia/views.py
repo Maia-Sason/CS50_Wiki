@@ -3,6 +3,7 @@ from django import forms
 from django.http import HttpResponseRedirect
 from django.urls import reverse
 from django.http import HttpResponse
+from random import randint, choice
 
 from . import util
 
@@ -32,7 +33,7 @@ def index(request):
 
 def wiki(request, title):
     return render(request, "encyclopedia/wiki.html", {
-        "title": util.get_entry(title.upper()),
+        "title": util.Markdown(util.get_entry(title.upper())),
         "title_raw": title
     })
 
@@ -76,6 +77,9 @@ def edit(request, title):
 def random(request):
     ''' function that pulls a random entry and passes into
         wiki'''
+    entry_list = util.list_entries()
+    num = randint(0, 5)
+    return HttpResponseRedirect(reverse("encyclopedia:wiki", kwargs={'title': choice(entry_list)}))
 
 def search(request):
     ''' function that returns list of entries
